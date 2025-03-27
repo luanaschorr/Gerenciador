@@ -85,8 +85,8 @@ public class TelaInicial extends JFrame {
          * JButton btnExcluir = new JButton("Excluir"); btnExcluir.setPreferredSize(new
          * Dimension(200, 50)); btnExcluir.addActionListener(e -> { remove(painel);
          * add(excluir); revalidate(); repaint(); }); painel.add(btnExcluir);
+         * 
          */
-
         add(painel);
     }
 
