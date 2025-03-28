@@ -1,6 +1,7 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class TelaInicial extends JFrame {
 
@@ -104,7 +105,7 @@ public class TelaInicial extends JFrame {
         add(painel);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         TelaInicial tela = new TelaInicial();
         tela.setVisible(true);
