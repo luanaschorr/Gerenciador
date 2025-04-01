@@ -1,10 +1,11 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class TelaInicial extends JFrame {
 
-    public TelaInicial() {
+    public TelaInicial() throws SQLException {
 
         setTitle("Tela Inicial");
         setSize(400, 400);
@@ -22,15 +23,13 @@ public class TelaInicial extends JFrame {
 
         JButton btnVoltarCadastro = new JButton("Voltar");
         JButton btnVoltarListar = new JButton("Voltar");
-        // JButton btnVoltarAtualizacao = new JButton("Voltar");
-        // JButton btnVoltarExcluir = new JButton("Voltar");
+        JButton btnVoltarAtualizacao = new JButton("Voltar");
+        JButton btnVoltarExcluir = new JButton("Voltar");
 
         JPanel cadastrar = new CadastrarProduto(btnVoltarCadastro);
         JPanel listar = new Listar(btnVoltarListar);
-        // JPanel atualizar = new AtualizarProduto(btnVoltarAtualizacao); quando for
-        // feito essa classe e a tela, tirar o comentario para funcionar esse botao
-        // JPanel excluir = new ExcluirProduto(btnVoltarExcluir); quando for feito essa
-        // classe e a tela, tirar o comentario para funcionar esse botao
+        JPanel atualizar = new AtualizarProduto(btnVoltarAtualizacao);
+        JPanel excluir = new ExcluirProduto(btnVoltarExcluir);
 
         btnVoltarCadastro.addActionListener(e -> {
             remove(cadastrar);
@@ -46,14 +45,19 @@ public class TelaInicial extends JFrame {
             repaint();
         });
 
-        /*
-         * btnVoltarAtualizacao.addActionListener(e -> { remove(atualizar); add(painel);
-         * revalidate(); repaint(); });
-         * 
-         * 
-         * btnVoltarExcluir.addActionListener(e -> { remove(excluir); add(painel);
-         * revalidate(); repaint(); });
-         */
+        btnVoltarAtualizacao.addActionListener(e -> {
+            remove(atualizar);
+            add(painel);
+            revalidate();
+            repaint();
+        });
+
+        btnVoltarExcluir.addActionListener(e -> {
+            remove(excluir);
+            add(painel);
+            revalidate();
+            repaint();
+        });
 
         JButton btnCadastrar = new JButton("Cadastrar Produto");
         btnCadastrar.setPreferredSize(new Dimension(200, 50));
@@ -75,25 +79,40 @@ public class TelaInicial extends JFrame {
         });
         painel.add(btnListar);
 
-        /*
-         * JButton btnAtualizar = new JButton("Atualizar Produto");
-         * btnAtualizar.setPreferredSize(new Dimension(200, 50));
-         * btnAtualizar.addActionListener(e -> { remove(painel); add(atualizar);
-         * revalidate(); repaint(); }); painel.add(btnAtualizar);
-         * 
-         * 
-         * JButton btnExcluir = new JButton("Excluir"); btnExcluir.setPreferredSize(new
-         * Dimension(200, 50)); btnExcluir.addActionListener(e -> { remove(painel);
-         * add(excluir); revalidate(); repaint(); }); painel.add(btnExcluir);
-         * 
-         */
+        JButton btnAtualizar = new JButton("Atualizar Produto");
+        btnAtualizar.setPreferredSize(new Dimension(200, 50));
+
+        btnAtualizar.addActionListener(e -> {
+            remove(painel);
+            add(atualizar);
+            revalidate();
+            repaint();
+        });
+
+        painel.add(btnAtualizar);
+
+        JButton btnExcluir = new JButton("Excluir");
+        btnExcluir.setPreferredSize(new Dimension(200, 50));
+
+        btnExcluir.addActionListener(e -> {
+            remove(painel);
+            add(excluir);
+            revalidate();
+            repaint();
+        });
+
+        painel.add(btnExcluir);
         add(painel);
     }
 
     public static void main(String[] args) {
-
-        TelaInicial tela = new TelaInicial();
-        tela.setVisible(true);
-
+        try {
+            TelaInicial tela = new TelaInicial();
+            tela.setVisible(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados: " + e.getMessage(), "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

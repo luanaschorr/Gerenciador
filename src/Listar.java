@@ -1,29 +1,44 @@
-
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.JPanel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Listar extends JPanel {
-    JScrollPane barraRolagem;
-    JPanel painelFundo;
-    JTable tabela;
-    Object[][] dados = {
-            { "produto", "id", "descrição" },
-            { "João da Silva", "48 8890-3345", "joaosilva@hotmail.com" },
-            { "Pedro Cascaes", "48 9870-5634", "pedrinho@gmail.com" }
-    };
 
-    String[] colunas = { "Nome", "id", "descricao" };
+    public Listar(JButton btnVoltar) throws SQLException {
+        setLayout(new BorderLayout());
 
-    public Listar(JButton btnVoltar) {
         JPanel painelFundo = new JPanel();
-        painelFundo.setLayout(new GridLayout(3, 3));
+        painelFundo.setLayout(new GridLayout(0, 1));
 
-        tabela = new JTable(dados, colunas);
-        barraRolagem = new JScrollPane(tabela);
-        painelFundo.add(barraRolagem);
+        add(painelFundo, BorderLayout.CENTER);
+        add(btnVoltar, BorderLayout.SOUTH);
 
-        add(btnVoltar);
+        String sqlSelect = "SELECT * FROM tb_product";
+
+        try (Connection connection = ConexaoBanco.getConexao();
+                PreparedStatement pstmt = connection.prepareStatement(sqlSelect);
+                ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("pro_id");
+                String name = rs.getString("pro_name");
+                String description = rs.getString("pro_desc");
+                double price = rs.getDouble("pro_price");
+                int quantity = rs.getInt("pro_quantity");
+
+                JLabel produto = new JLabel(
+                        id + " - " + name + " | " + description + " | R$ " + price + " | " + quantity + " unid.");
+                painelFundo.add(produto);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JLabel erro = new JLabel("Erro ao carregar os produtos.");
+            painelFundo.add(erro);
+            add(btnVoltar);
+        }
     }
-
 }
