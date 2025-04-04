@@ -1,5 +1,8 @@
+package estoque;
+
+
+
 import javax.swing.*;
-import BdConition.DBConnection;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ExcluirProduto extends JPanel {
+	
     public ExcluirProduto(JButton btnVoltar) {
         setLayout(new GridLayout(3, 1, 10, 10));
 
@@ -37,10 +41,12 @@ public class ExcluirProduto extends JPanel {
             }
         });
     }
+   
+
 
     private void excluirProduto(int id) {
         String sqlDelete = "DELETE FROM tb_product WHERE pro_id = ?";
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = ConexaoBanco.getConexao();
              PreparedStatement pstmt = connection.prepareStatement(sqlDelete)) {
             pstmt.setInt(1, id);
             int affectedRows = pstmt.executeUpdate();

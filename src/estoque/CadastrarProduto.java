@@ -1,3 +1,5 @@
+package estoque;
+
 
 import javax.swing.*;
 import java.awt.*;

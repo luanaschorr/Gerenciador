@@ -1,5 +1,6 @@
 package estoque;
 
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.sql.Connection;
@@ -23,7 +24,7 @@ public class Listar extends JPanel {
         JPanel painelFundo = new JPanel();
         painelFundo.setLayout(new GridLayout(0, 1));
 
-        add(painelFundo, BorderLayout.CENTER);
+        add(painelFundo, BorderLayout.CENTER) ;
         add(btnVoltar, BorderLayout.SOUTH);
         
         String[] columns = {"ID", "Nome", "Descrição", "Preço", "Quantidade"};
