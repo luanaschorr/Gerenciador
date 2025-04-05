@@ -27,7 +27,7 @@ public class Listar extends JPanel {
         add(painelFundo, BorderLayout.CENTER) ;
         add(btnVoltar, BorderLayout.SOUTH);
         
-        String[] columns = {"ID", "Nome", "Descrição", "Preço", "Quantidade"};
+        String[] columns = {"ID", "Nomee", "Descrição", "Preço", "Quantidade"};
         ArrayList<Object[]> listaProdutos = new ArrayList<>();
         
 
